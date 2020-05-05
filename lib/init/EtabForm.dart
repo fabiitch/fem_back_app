@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:fem_back_app/data/EtabInfo.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class EtabForm extends StatefulWidget {
   @override
@@ -9,6 +12,23 @@ class EtabForm extends StatefulWidget {
   }
 }
 
+Future<EtabInfo> fetchAlbum() async {
+  final response =
+      await http.get('http://10.0.2.2:8080/fem/api/etab/v1/test');
+
+  if (response.statusCode == 200) {
+    print('ok');
+    print(response.body);
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return EtabInfo.fromJson(json.decode(response.body));
+  } else {
+    print('error $response.statusCode');
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
 // Define a corresponding State class.
 // This class holds data related to the form.
 class EtabFormState extends State<EtabForm> {
@@ -19,6 +39,7 @@ class EtabFormState extends State<EtabForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   String _name, _email, _type;
+  Future<EtabInfo> futreEtab;
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +106,22 @@ class EtabFormState extends State<EtabForm> {
                           // otherwise.
                           if (_formKey.currentState.validate()) {
                             // If the form is valid, display a Snackbar.
-                            Scaffold.of(context).showSnackBar(
-                                SnackBar(content: Text('Processing Data')));
+//                            Scaffold.of(context).showSnackBar(
+//                                SnackBar(content: Text('Processing Data')));
                             _formKey.currentState.save();
                             print(_formKey);
                             print(_name);
 
-                            EtabInfo(_name,_email,_type);
+                            EtabInfo etabNew =
+                                EtabInfo('1','2', _name, _email, _type);
+                            print('============');
+                            print(etabNew);
+
+                            futreEtab = fetchAlbum();
+                            futreEtab.then((value) {
+                              print('then ');
+                              print(value);
+                            });
                           } else {
                             Scaffold.of(context).showSnackBar(
                                 SnackBar(content: Text('Invalid Form !')));
