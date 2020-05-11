@@ -1,4 +1,6 @@
 import 'package:fem_back_app/init/EtabForm.dart';
+import 'package:fem_back_app/item/ItemDetails.dart';
+import 'package:fem_back_app/menu/MenuDetails.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(FastEatManagerAPP());
