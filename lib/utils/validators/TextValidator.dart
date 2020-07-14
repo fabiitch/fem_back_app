@@ -9,29 +9,19 @@ class TextValidator {
       return null;
     };
   }
-
-  /// validator de min/max
-  static Function(String) minMaxLenght(int minLenght, int maxLenght) {
+  static Function(String) min(int minLenght) {
     return (String input) {
-      if (minLenght != null && input.length < minLenght) {
+      if (input.length < minLenght) {
         return 'Valeur trop courte (min: $minLenght)';
-      } else if (input.length > maxLenght) {
-        return 'Valeur trop longue (max: $maxLenght)';
       }
       return null;
     };
   }
 
-  /// validator de empty/min/max (opt)
-  static Function(String) emptyMinMaxLenght(int minLenght, int maxLenght) {
+  static Function(String) max(int maxLenght) {
     return (String input) {
-      if (input.isEmpty) {
-        return 'Valeur requise';
-      } else if (minLenght != null && input.length < minLenght) {
-        return 'Valeur trop courte (min: $minLenght)';
-      } else if (input.length > maxLenght) {
+      if (input.length > maxLenght)
         return 'Valeur trop longue (max: $maxLenght)';
-      }
       return null;
     };
   }

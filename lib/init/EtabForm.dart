@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:email_validator/email_validator.dart';
-import 'package:fem_back_app/data/EtabInfo.dart';
-import 'package:fem_back_app/utils/input/EmailInput.dart';
-import 'file:///C:/Users/fabie/Documents/info/FEM/fem_back_app/lib/utils/input/InputText.dart';
+import 'file:///C:/Users/fabie/Documents/info/FEM/fem_back_app/lib/utils/input/text/EmailInput.dart';
+import 'package:fem_back_app/utils/input/text/InputText.dart';
 import 'package:fem_back_app/utils/validators/TextValidator.dart';
+import 'file:///C:/Users/fabie/Documents/info/FEM/fem_back_app/lib/utils/input/text/SimpleInputText.dart';
+import 'package:fem_back_app/vo/EtabInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -46,6 +46,7 @@ class EtabFormState extends State<EtabForm> {
 
   @override
   Widget build(BuildContext context) {
+    Function(String) tt = TextValidator.min(2);
     // Build a Form widget using the _formKey created above.
     return Scaffold(
         appBar: AppBar(title: Text("Information Générales Etablissement")),
@@ -53,21 +54,28 @@ class EtabFormState extends State<EtabForm> {
             margin: EdgeInsets.all(24),
             child: Form(
                 key: _formKey,
-                child: Column(
+                child: new SingleChildScrollView(
+                    child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SimpleInputText("Information Générales Etablissement", 1, 20,
+                    SimpleInputText("Information Générales Etablissement",
                         (String value) {
                       _name = value;
-                    }, Icons.home),
+                    }, 1, 20, Icons.home),
+                    SimpleInputText("I222222222222", (String value) {
+                      _name = value;
+                    }, 1, 20),
+                    InputText("NameEtab", (String value) {
+                      _name = value;
+                    }, [TextValidator.min(2), TextValidator.max(5)]),
                     EmailInput((String value) {
                       _name = value;
                     }),
-                    SimpleInputText("Type etablissement", 1, 20,
-                            (String value) {
-                          _type = value;
-                        }, Icons.adjust),
+//                    SimpleInputText("Type etablissement", 1, 20,
+//                            (String value) {
+//                          _type = value;
+//                        }, Icons.adjust),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: RaisedButton(
@@ -96,6 +104,6 @@ class EtabFormState extends State<EtabForm> {
                       ),
                     ),
                   ],
-                ))));
+                )))));
   }
 }
