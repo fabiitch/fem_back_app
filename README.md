@@ -2,6 +2,24 @@
 
 Fast Eat Manager back end application
 
+# Install  :
+https://flutter.dev/docs/get-started/install
+
+
+ex appel back
+
+final response = await http.get('http://10.0.2.2:8080/fem/api/etab/v1/test'); 
+
+
+
+
+
+
+
+
+
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
