@@ -7,6 +7,7 @@ import 'file:///C:/Users/fabie/Documents/info/FEM/fem_back_app/lib/utils/input/t
 import 'package:fem_back_app/vo/EtabInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import "EtabFormFunction.dart";
 
 class EtabForm extends StatefulWidget {
   @override
@@ -31,7 +32,6 @@ Future<EtabInfo> fetchAlbum() async {
     throw Exception('Failed to load album');
   }
 }
-
 // Define a corresponding State class.
 // This class holds data related to the form.
 class EtabFormState extends State<EtabForm> {
@@ -63,19 +63,15 @@ class EtabFormState extends State<EtabForm> {
                         (String value) {
                       _name = value;
                     }, 1, 20, Icons.home),
-                    SimpleInputText("I222222222222", (String value) {
-                      _name = value;
+                    SimpleInputText("etab type", (String value) {
+                      _type = value;
                     }, 1, 20),
                     InputText("NameEtab", (String value) {
                       _name = value;
-                    }, [TextValidator.min(2), TextValidator.max(5)]),
+                    }, [TextValidator.min(2), TextValidator.max(50)]),
                     EmailInput((String value) {
-                      _name = value;
+                      _email = value;
                     }),
-//                    SimpleInputText("Type etablissement", 1, 20,
-//                            (String value) {
-//                          _type = value;
-//                        }, Icons.adjust),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: RaisedButton(
@@ -90,7 +86,13 @@ class EtabFormState extends State<EtabForm> {
                             print('============');
                             print(etabNew);
 
-                            futureEtab = fetchAlbum();
+                            futureEtab = saveEtab(etabNew);
+                            futureEtab.then((value) {
+                              print('then AAAAAAAAAAAAA ');
+                              print(value);
+                            });
+
+                            //                            futureEtab = fetchAlbum();
                             futureEtab.then((value) {
                               print('then ');
                               print(value);
