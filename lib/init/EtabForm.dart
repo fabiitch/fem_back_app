@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'file:///C:/Users/fabie/Documents/info/FEM/fem_back_app/lib/utils/input/text/EmailInput.dart';
+import 'package:fem_back_app/provider/EtabProvider.dart';
 import 'package:fem_back_app/utils/input/text/InputText.dart';
 import 'package:fem_back_app/utils/validators/TextValidator.dart';
 import 'file:///C:/Users/fabie/Documents/info/FEM/fem_back_app/lib/utils/input/text/SimpleInputText.dart';
 import 'package:fem_back_app/vo/EtabInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import "EtabFormFunction.dart";
 
 class EtabForm extends StatefulWidget {
   @override
@@ -32,6 +32,7 @@ Future<EtabInfo> fetchAlbum() async {
     throw Exception('Failed to load album');
   }
 }
+
 // Define a corresponding State class.
 // This class holds data related to the form.
 class EtabFormState extends State<EtabForm> {
@@ -82,13 +83,12 @@ class EtabFormState extends State<EtabForm> {
                             print(_name);
 
                             EtabInfo etabNew =
-                                EtabInfo(0, _name, _email, _type);
+                                EtabInfo(null, _name, _email, _type);
                             print('============');
                             print(etabNew);
 
-                            futureEtab = saveEtab(etabNew);
+                            futureEtab = EtabProvider.saveEtab(etabNew);
                             futureEtab.then((value) {
-                              print('then AAAAAAAAAAAAA ');
                               print(value);
                             });
 

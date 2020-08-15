@@ -8,7 +8,7 @@ part of 'EtabInfo.dart';
 
 EtabInfo _$EtabInfoFromJson(Map<String, dynamic> json) {
   return EtabInfo(
-    json['id'] as int,
+    int.parse(json['id']) as int,
     json['name'] as String,
     json['email'] as String,
     json['type'] as String,
